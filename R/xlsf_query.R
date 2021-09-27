@@ -24,11 +24,34 @@ xlsf_query <- function(xlsf,lab_query){
     dict_filt %>%
       tidyr::unnest(c(choice_name, choice_label)) %>%
       select(choice_name, choice_label) %>%
-      print()
+      knitr::kable(label = "here it is")
 
   }
 
 
 
 }
+
+# # xlsf <-  xlsf_load(survey = xlsf[[2]],choices = xlsf[[1]])
 # xlsf_query(xlsf,lab_query = "Treating drinking water")
+# dict_filt<-dict %>%
+#   filter(str_detect(label,"water"))
+#
+# print_these_tables<- dict_filt %>%
+#   tidyr::unnest(c(choice_name, choice_label)) %>%
+#   select(name,choice_name, choice_label) %>%
+#   split(.$name)
+#
+# library(knitr)
+# library(kableExtra)
+# ## tables
+# for(i in seq_along(print_these_tables)) {
+#
+#     kable(print_these_tables[[i]],  caption = names(print_these_tables)[i], longtable = TRUE) #%>%
+#       # kable_styling(font_size = 7, latex_options = "repeat_header", full_width = FALSE)
+# }
+# options(kableExtra_view_html = F)
+# options(kableExtra_view_html = F)
+# print_these_tables[[1]] %>%
+#   knitr::kable(caption = 'Two tables created by knitr::kables().')
+# tables <- imap(print_these_tables, ~ kable(.x, caption = .y))
