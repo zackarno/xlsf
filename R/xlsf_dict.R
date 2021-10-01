@@ -28,7 +28,7 @@ xlsf_dict <- function(xlsf){
     )
 
   survey_questions<-xlsf$survey %>%
-    select(type, name,label) %>%
+    select(type, name,label,relevant) %>%
     mutate(
       `list name`=  str_remove(type,"select_one|select one|select_multiple|select multiple") %>% trimws(),
       `type` = str_extract(type,"select_one|select one|select_multiple|select multiple|integer|int") %>% trimws()
