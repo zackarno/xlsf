@@ -4,54 +4,52 @@
 #' @author Zack Arno
 #' @param xlsf XLSForm entered as list of 2 named data frame (`survey`,`choices`)
 #' @param lab_query question label queryy
+#' @import dplyr
 #' `TODO` when query returns more than  option, create interactivity to select correct
 #' once connected to data set, it would be pretty cool to just give raww counts
 
 
-xlsf_query <- function(xlsf,lab_query){
-
+xlsf_query <- function(xlsf,pattern,.col="label"){
   dict <- xlsf_dict(xlsf)
-  dict_filt<-dict %>%
-    filter(str_detect(label,lab_query))
-  # if(nrow(dict_filt==0)){
-  #   message("please refine query")
-  # }
-  if(nrow(dict_filt)==1){
-    cat(crayon::green("xml_name:"), dict_filt$name,"\n")
-    cat(crayon::green("question_label:"), dict_filt$label,"\n")
-    cat(crayon::green("choices xml & labels:"),"\n")
+  query_col_str <- switch(.col,
+                      "xml_name"="name",
+                      "label"="label")
+  query_col_sym <- sym(query_col_str)
 
-    dict_filt %>%
+  dict_filt<-dict %>%
+    filter(str_detect(!!query_col_sym,regex(pattern,ignore_case = T)))
+  assertthat::assert_that(nrow(dict_filt)>0,
+                          msg = "The pattern supplied provides no matches, please refine query.\nHint: in addition to querying the question label, you can also query coded xml_names, but you much switch the .col argument to xml_name")
+    for(i in seq_len(nrow(dict_filt))){
+    dict_loop <- dict_filt %>%
+      slice(i)
+    relevancy <- if_else(is.na(dict_loop$relevant),"none",dict_loop$relevant)
+
+    cat(crayon::green("question_label:"), dict_loop$label,"\n")
+    cat(crayon::green("xml_name:"), dict_loop$name,"\n")
+    cat(crayon::green("relevancy:"), relevancy,crayon::green("    type:"),dict_loop$type)
+
+
+    dict_loop %>%
       tidyr::unnest(c(choice_name, choice_label)) %>%
       select(choice_name, choice_label) %>%
-      knitr::kable(label = "here it is")
+      knitr::kable(
+      ) %>% print()
+    cat("\n\n")
+
+  }
+
 
   }
 
 
 
-}
 
+# data(xlsf_dat)
+#
+# # xlsf_load just basically makes a named list of survye and choices
 # # xlsf <-  xlsf_load(survey = xlsf[[2]],choices = xlsf[[1]])
-# xlsf_query(xlsf,lab_query = "Treating drinking water")
-# dict_filt<-dict %>%
-#   filter(str_detect(label,"water"))
-#
-# print_these_tables<- dict_filt %>%
-#   tidyr::unnest(c(choice_name, choice_label)) %>%
-#   select(name,choice_name, choice_label) %>%
-#   split(.$name)
-#
-# library(knitr)
-# library(kableExtra)
-# ## tables
-# for(i in seq_along(print_these_tables)) {
-#
-#     kable(print_these_tables[[i]],  caption = names(print_these_tables)[i], longtable = TRUE) #%>%
-#       # kable_styling(font_size = 7, latex_options = "repeat_header", full_width = FALSE)
-# }
-# options(kableExtra_view_html = F)
-# options(kableExtra_view_html = F)
-# print_these_tables[[1]] %>%
-#   knitr::kable(caption = 'Two tables created by knitr::kables().')
-# tables <- imap(print_these_tables, ~ kable(.x, caption = .y))
+# # xlsf_query(xlsf,pattern =  "food")
+# # xlsf_dict(xlsf)
+# xlsf$survey %>%
+#   filter(!is.na(relevant)) %>% select(label,relevant)
