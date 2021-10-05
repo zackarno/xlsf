@@ -7,11 +7,14 @@
 #' @param data list of data sets derived from form (main data set and any repeat group sets)
 #' `TODO` need to incorporate data arguments -- maybe ellipses for more than one argument
 
-xlsf_load <-  function(survey, choices, label="label::English (en)"){
+xlsf_load <-  function(survey, choices, label="label::English (en)",sm_sep){
   xlsf <- list(survey= survey, choices= choices)
-  purrr::map(.x = xlsf, ~.x %>% rename(`label`=label))
-}
+  xlsf <- purrr::map(.x = xlsf, ~.x %>% rename(`label`=label))
+  class(xlsf)<- c(class(xlsf),"xlsf")
+  attr(xlsf,"sm_sep")<- sm_sep
+  return(xlsf)
 
+}
 
 
 
