@@ -22,7 +22,7 @@ The goal of xlsf is to is to facilitate the analysis and exploration of ODK styl
 
 ## Installation
 
-You can install the released version of github from [CRAN](https://github.com/zackarno/xlsf) with:
+You can install the released version of github from [GitHub](https://github.com/zackarno/xlsf) with:
 
 ``` r
 devtools::install_github(repo = "zackarno/xlsf")
@@ -36,6 +36,8 @@ This is a basic example which shows you how to solve a common problem:
  
 library(xlsf)
 ## basic example code
+# xlsf::xlsf_load()
+# xlsf::xlsf_query()
 ```
 
 What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:

@@ -12,7 +12,7 @@ ODK style XLSForm/questionnaire data structures.
 ## Installation
 
 You can install the released version of github from
-[CRAN](https://github.com/zackarno/xlsf) with:
+[GitHub](https://github.com/zackarno/xlsf) with:
 
 ``` r
 devtools::install_github(repo = "zackarno/xlsf")
@@ -25,6 +25,8 @@ This is a basic example which shows you how to solve a common problem:
 ``` r
 library(xlsf)
 ## basic example code
+# xlsf::xlsf_load()
+# xlsf::xlsf_query()
 ```
 
 What is special about using `README.Rmd` instead of just `README.md`?
