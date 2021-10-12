@@ -4,7 +4,14 @@
 \alias{xlsf_load}
 \title{xlsf_load}
 \usage{
-xlsf_load(survey, choices, label = "label::English (en)")
+xlsf_load(
+  survey,
+  choices,
+  data_main = NULL,
+  ...,
+  label = "label::English (en)",
+  sm_sep
+)
 }
 \arguments{
 \item{survey}{data.frame containing survey tab contents of xlsform}
@@ -13,8 +20,7 @@ xlsf_load(survey, choices, label = "label::English (en)")
 
 \item{label}{colname that contians labels (default=label::English (en))}
 
-\item{data}{list of data sets derived from form (main data set and any repeat group sets)
-`TODO` need to incorporate data arguments -- maybe ellipses for more than one argument}
+\item{data}{list of data sets derived from form (main data set and any repeat group sets)}
 }
 \description{
 create xlsf object

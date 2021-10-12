@@ -10,27 +10,33 @@ print.xlsf_survey <- function(df){
 
 }
 
-print.xlsf <-  function(df){
-
-
-
-}
 
 # data(xlsf_dat)
-# debugonce(xlsf_load)
-# xlsf <-  xlsf_load(survey = xlsf[[2]],choices = xlsf[[1]],sm_sep = "/")
-# class(xlsf)
+# data(dat)
+# # debugonce(xlsf_load)
+# xlsf_ob <-  xlsf_load(survey = xlsf[[2]],choices = xlsf[[1]], data_main=dat$hh_data,repeat1= dat$repeat_grp1,mynuts= dat$repeat_grp2,sm_sep = "/")
+# xlsf_ob$mynuts
+# print(xlsf_ob)
+# # class(xlsf)
 
 # structure(xlsf)
 # print(xlsf)
 # attributes(xlsf)
 
+
 #' @export
 print.xlsf <-  function(x){
   widgets <-  c("date","^int$","^integer$","select_multiple","select multiple","select_one","select one","text","time")
 
-  data_msg <-  ifelse("data"%in% names(x),"data set attached","no data set attached")
-  cat("XLSForm survey compposed of survey & choices sheet:",data_msg,sep = "\n")
+  if("data_main" %in% names(x)){
+    num_respondents<-dim(x$data_main)[1]
+    data_msg <-  glue::glue("data set attached with {crayon::green(num_respondents)} respondents")
+  }else{
+    data_msg <- "no data set attached"
+  }
+
+  cat("XLSForm survey composed of survey & choices sheet:",data_msg,sep = "\n")
+
 
 
   survey_type_n <-  x$survey %>%
@@ -46,10 +52,16 @@ print.xlsf <-  function(x){
       TRUE~type
     )) %>%
     count(type)
-  survey_type_n
+  survey_type_n %>%
+    print()
+  if("data_main" %in% names(x)){
+    x$data_main %>%
+      print()
+  }
+
 
 
 
 
 }
-print(xlsf)
+

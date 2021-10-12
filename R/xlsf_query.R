@@ -5,8 +5,9 @@
 #' @param xlsf XLSForm entered as list of 2 named data frame (`survey`,`choices`)
 #' @param lab_query question label queryy
 #' @import dplyr
-#' `TODO` when query returns more than  option, create interactivity to select correct
-#' once connected to data set, it would be pretty cool to just give raww counts
+#' @TODO when query returns more than  option, create interactivity to select correct
+#' once connected to data set, it would be pretty cool to just give raw counts
+#' @export
 
 
 xlsf_query <- function(xlsf,pattern,.col="label"){
@@ -48,7 +49,7 @@ xlsf_query <- function(xlsf,pattern,.col="label"){
 # data(xlsf_dat)
 #
 # # xlsf_load just basically makes a named list of survye and choices
-# # xlsf <-  xlsf_load(survey = xlsf[[2]],choices = xlsf[[1]])
+# xlsf <-  xlsf_load(survey = xlsf[[2]],choices = xlsf[[1]])
 # # xlsf_query(xlsf,pattern =  "food")
 # # xlsf_dict(xlsf)
 # xlsf$survey %>%

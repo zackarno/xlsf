@@ -4,7 +4,7 @@
 \alias{xlsf_query}
 \title{xlsf_query}
 \usage{
-xlsf_query(xlsf, lab_query)
+xlsf_query(xlsf, pattern, .col = "label")
 }
 \arguments{
 \item{xlsf}{XLSForm entered as list of 2 named data frame (`survey`,`choices`)}

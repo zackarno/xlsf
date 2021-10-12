@@ -16,6 +16,7 @@
 #' @description create nested look up table dictionary for xlsForm
 #' @author Zack Arno
 #' @param xlsf XLSForm entered as list of 2 named data frame (`survey`,`choices`)
+#' @export
 
 xlsf_dict <- function(xlsf){
 
