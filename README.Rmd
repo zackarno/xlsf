@@ -36,7 +36,8 @@ This is a basic example which shows you how to solve a common problem:
  
 library(xlsf)
 ## basic example code
-# xlsf::xlsf_load()
+xlsf_questionnaire <- xlsf::xlsf_load(survey = survey_df, choices = choices_df)
+dat_releveled <-  xlsf:::xlsf_relevel(df = dat,xlsf = xlsf_questionnaire,sm_sep = "/")
 # xlsf::xlsf_query()
 ```
 

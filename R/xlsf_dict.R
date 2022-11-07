@@ -21,8 +21,8 @@
 xlsf_dict <- function(xlsf){
 
   survey_choices<-xlsf$choices %>%
-    filter(!is.na(`list name`)) %>%
-    group_by(`list name`) %>%
+    filter(!is.na(list_name)) %>%
+    group_by(list_name) %>%
     summarise(
       choice_name= list(name),
       choice_label=list(label)
@@ -31,14 +31,14 @@ xlsf_dict <- function(xlsf){
   survey_questions<-xlsf$survey %>%
     select(type, name,label,relevant) %>%
     mutate(
-      `list name`=  str_remove(type,"select_one|select one|select_multiple|select multiple") %>% trimws(),
+      `list_name` =  str_remove(type,"select_one|select one|select_multiple|select multiple") %>% trimws(),
       `type` = str_extract(type,"select_one|select one|select_multiple|select multiple|integer|int") %>% trimws()
 
     )
 
   survey_choices %>%
-    left_join(survey_questions) %>%
-    select(type, `list name`, everything()) %>%
+    dplyr::left_join(survey_questions) %>%
+    dplyr::select(type, list_name, everything()) %>%
     suppressMessages
 
 

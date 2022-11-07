@@ -10,7 +10,10 @@
 
 xlsf_load <-  function(survey, choices,data_main=NULL,..., label="label::English (en)",sm_sep){
   xlsf <- list(survey= survey, choices= choices)
-  xlsf <- purrr::map(.x = xlsf, ~.x %>% rename(`label`=label))
+  xlsf <- purrr::map(.x = xlsf, ~.x %>%
+                       rename(`label`=label) |>
+                       janitor::clean_names()
+                     )
   if(!is.null(data_main)){
     xlsf <- c(xlsf , list(data_main = data_main,...))
   }
