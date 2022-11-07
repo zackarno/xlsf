@@ -9,7 +9,9 @@ xlsf_query(xlsf, pattern, .col = "label")
 \arguments{
 \item{xlsf}{XLSForm entered as list of 2 named data frame (`survey`,`choices`)}
 
-\item{lab_query}{question label queryy}
+\item{pattern}{\code{character} question label query}
+
+\item{.col}{\code{character} which column to query - "label" or "xml_name" (default = "label")}
 }
 \description{
 quickly query throu kobo forms. Goal: minmize time you have to spend opening an checking XLSForm while processingn data in R

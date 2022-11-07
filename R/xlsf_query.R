@@ -3,7 +3,8 @@
 #' @description quickly query throu kobo forms. Goal: minmize time you have to spend opening an checking XLSForm while processingn data in R
 #' @author Zack Arno
 #' @param xlsf XLSForm entered as list of 2 named data frame (`survey`,`choices`)
-#' @param lab_query question label queryy
+#' @param pattern \code{character} question label query
+#' @param .col \code{character} which column to query - "label" or "xml_name" (default = "label")
 #' @import dplyr
 #' @TODO when query returns more than  option, create interactivity to select correct
 #' once connected to data set, it would be pretty cool to just give raw counts
