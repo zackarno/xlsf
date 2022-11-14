@@ -4,12 +4,14 @@
 \alias{xlsf_relevel}
 \title{xlsf_relevel}
 \usage{
-xlsf_relevel(df, xlsf, sm_sep = "/")
+xlsf_relevel(df, xlsf, skip = NULL, sm_sep = "/")
 }
 \arguments{
 \item{df}{XLSForm data set (i.e kobo/ODK)}
 
 \item{xlsf}{xlsf class object}
+
+\item{skip}{column to skip in releveling (default = NULL)}
 }
 \description{
 relevel data to XLSForm. fct_expand applied to relevel all select questions to choices in questionnaire. all select_multiple converted to logical

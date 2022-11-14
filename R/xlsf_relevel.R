@@ -5,6 +5,7 @@
 #' @author Zack Arno
 #' @param df XLSForm data set (i.e kobo/ODK)
 #' @param xlsf xlsf class object
+#' @param skip column to skip in releveling (default = NULL)
 
 #' @TODO research if i should use sm_sep attribute from xlsf_load rather than named argument
 #'
@@ -12,11 +13,16 @@
 
 
 
-xlsf_relevel<- function(df, xlsf,sm_sep="/"){
+xlsf_relevel<- function(df, xlsf,skip=NULL, sm_sep="/"){
 
   so_names <- intersect(xlsf_get_so(), colnames(df))
   sm_names <- intersect(xlsf_get_sm(), colnames(df))
 
+  if(!is.null(skip)){
+    skip_rgx <- glue::glue_collapse(x = glue::glue("^{skip}$"),sep = "|")
+    so_names <- so_names[!str_detect(so_names,skip_rgx)]
+    sm_names <- sm_names[!str_detect(sm_names,skip_rgx)]
+  }
   cat(crayon::green("factorzing select ones & making all select multiple logical:\n"))
   df %>%
     mutate(
@@ -50,9 +56,11 @@ xlsf_fct_so<- function(df,q_name,xlsf){
     filter(name==q_name)
 
   choice_lookup <- so_q_dict %>%
-    pull(choice_name)
+    dplyr::pull(choice_name)
 
-  fct_expand(as_factor(df), choice_lookup)
+  df_expanded <- forcats::fct_expand(as_factor(df), choice_lookup)
+
+  forcats::fct_relevel(df_expanded, choice_lookup)
 
 
 }
