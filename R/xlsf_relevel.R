@@ -15,8 +15,8 @@
 
 xlsf_relevel<- function(df, xlsf,skip=NULL, sm_sep="/"){
 
-  so_names <- intersect(xlsf_get_so(), colnames(df))
-  sm_names <- intersect(xlsf_get_sm(), colnames(df))
+  so_names <- intersect(xlsf_get_so(xlsf), colnames(df))
+  sm_names <- intersect(xlsf_get_sm(xlsf), colnames(df))
 
   if(!is.null(skip)){
     skip_rgx <- glue::glue_collapse(x = glue::glue("^{skip}$"),sep = "|")
@@ -58,7 +58,7 @@ xlsf_fct_so<- function(df,q_name,xlsf){
   choice_lookup <- so_q_dict %>%
     dplyr::pull(choice_name)
 
-  df_expanded <- forcats::fct_expand(as_factor(df), choice_lookup)
+  df_expanded <- forcats::fct_expand(forcats::as_factor(df), choice_lookup)
 
   forcats::fct_relevel(df_expanded, choice_lookup)
 
@@ -84,7 +84,7 @@ xlsf_get_sm<- function(xlsf=kobo,sm_sep="/"){
 
 
 }
-xlsf_get_so<- function(xlsf=kobo){
+xlsf_get_so<- function(xlsf){
   dict<-xlsf_dict(xlsf)
   dict %>%
     filter(str_detect(type,"^select_one|^select one")) %>%
